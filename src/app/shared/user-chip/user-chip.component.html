@@ -1,0 +1,18 @@
+<div class="chip">
+    <div class="chip--name">{{user.name}}</div>
+    <div
+        *ngIf="config.isCreator"
+        class="chip--icon creator-icon">C</div>
+    <div
+        *ngIf="showModerator && !config.isCreator"
+        class="chip--icon moderator-icon"
+        [ngClass]="{
+            'moderator-icon__selected': config.isModerator,
+            'moderator-icon__editable': config.isEditable
+        }"
+        (click)="toggleModerator()">M</div>
+    <div
+        *ngIf="config.isRemovable"
+        class="chip--icon delete-icon"
+        (click)="delete()">X</div>
+</div>

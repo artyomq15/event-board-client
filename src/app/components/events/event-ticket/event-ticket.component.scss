@@ -1,0 +1,359 @@
+$grid-width: 100%;
+$grid-field-width: 92%;
+$grid-field-height: auto;
+$grid-column-height: auto;
+$border-solid-wight: 0.1px;
+
+$hours-row-border-width: 1px;
+$block-row-border-width: $hours-row-border-width / 2;
+
+$border-solid-color: #000000;
+
+$grid-hour-column-width: 105%;
+$hour-row-height: 79px;
+$block-row-height: $hour-row-height / 2;
+
+$event-header-width: 90%;
+$event-header-height: 26px;
+
+$main-color: rgb(216, 216, 216);
+
+$even-row-color: rgba(172, 172, 172, 0.6);
+$odd-row-color: rgba(255, 255, 255, 0.6);
+$hover-row-color: rgba(175, 255, 129, 0.6);
+$selected-row-color: rgba(146, 178, 221, 0.6);
+$not-allowed-row-color: rgba(255, 159, 159, 0.6);
+
+
+.container {
+  width: $grid-width;
+  margin-top: 5px;
+
+  &--grid {
+    transition: 0.3s;
+    float: left;
+    width: 98%;
+    margin: 0 1%;
+  }
+
+  &--grid__compressed {
+    width: 73%;
+  }
+
+  &--current-event {
+    float: left;
+    width: 24%;
+  }
+
+  &--calendar-border{}
+
+  .calendar-border {
+    display: flex;
+    position: relative;
+    height: $grid-field-height;
+    margin: 0 auto;
+    border: dotted $border-solid-wight $border-solid-color;
+
+    &--column {
+      width: $grid-width/5;
+      text-align: center;
+      flex: 1 1 auto;
+    }
+    &--column:nth-child(1){
+      width: 5% ;
+    }
+    h3 {
+      &--column {
+        display: inline-block;
+        border: solid $border-solid-wight $border-solid-color;
+        margin: 0;
+        text-align: center;
+      }
+
+    }
+  }
+
+  #column-0 {
+  }
+
+  &--date-period {
+    display: flex;
+    width: 100%;
+    margin: 15px 0;
+    justify-content: space-between;
+  }
+
+  &--date-period > div {
+    display: inline-block;
+
+  }
+
+  &--hours-column {
+    position: relative;
+    top: 60px;
+    width: 100%;
+  }
+
+  &--day-column {
+    position: relative;
+    // top: 60px;
+    width: 100%;
+  }
+
+  &--hours-block {
+    position: relative;
+    height: $hour-row-height;
+    border: dotted $hours-row-border-width $border-solid-color;
+  }
+
+  &--grid-block {
+    position: relative;
+    height: $block-row-height;
+    border: dotted $block-row-border-width $border-solid-color;
+
+
+    &__even {
+      background-color: $even-row-color;
+    }
+
+    &__odd {
+      background-color: $odd-row-color;
+    }
+
+    &__selected {
+      background-color: $selected-row-color;
+    }
+
+    &__hovered {
+      background-color: $hover-row-color;
+    }
+
+    &__ondrag {
+      z-index: 100;
+    }
+
+    &__not-allowed {
+      background-color: $not-allowed-row-color;
+    }
+
+  }
+
+
+}
+.time-period{
+  width: 30px;
+  margin: 5px;
+  font-size: 1.1em;
+}
+.period-generate-button{
+  margin-left: 10px;
+  width: 50px;
+}
+.event--draggable-container {
+    background-color: rgb(238, 238, 238);
+}
+.event {
+    position: absolute;
+    overflow: hidden;
+    text-align: left;
+    border: $hours-row-border-width solid rgb(160, 160, 160);
+    z-index: 20;
+
+    border-radius: 5px;
+
+    background-color: rgb(238, 238, 238);
+
+    user-select: none;
+
+    &__resizable:hover {
+        border-top-color: rgb(81, 204, 253);
+        border-bottom-color: rgb(81, 204, 253);
+    }
+
+    &__not-resizable:hover {
+        border-top-color: rgb(253, 81, 81);
+        border-bottom-color: rgb(253, 81, 81);
+    }
+
+    &__dragged {
+        background-color: rgb(252, 255, 217);
+    }
+
+    &--header {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        width: $event-header-width;
+        margin: 0;
+        padding: 0 0 0 5px;
+        color: #050505;
+        font-weight: bold;
+        font-size: 15px;
+    }
+
+    &--description {
+        font-size: 13px;
+        margin: 10px 0 0 5px;
+        height: auto;
+    }
+
+    &--time-container {
+        margin-left: 5px;
+
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    &--time {
+        font-weight: lighter;
+        font-size: 12px;
+    }
+
+    &--delete-button {
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 15px;
+        width: 15px;
+        background-color: $main-color;
+        cursor: pointer;
+    }
+    &--color{
+        position: absolute;
+        top: 0px;
+        left: 0;
+        width: 20px;
+    }
+}
+
+.events-container {
+  width: inherit;
+  position: absolute;
+  z-index: 50;
+}
+
+.date-period--week-changer{
+  margin: 2px 0 0 20px;
+  width: 50px;
+  display: inline-flex;
+  cursor: pointer;
+}
+
+.date-period--text{
+  font-size: 2em ;
+  display: inline-flex;
+  font-weight: bold;
+}
+.calendar-border--column > .container--hours-column{
+  top: 1px;
+}
+
+// styles to event-modifier
+.edit-window{
+  position: absolute;
+  width: 80%;
+  top: 10px;
+  left: 7.5%;
+  z-index: 102;
+  background-color: #ffffff;
+  padding: 10px 2.5%;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0,0,0, 0.5);
+
+  &--container{
+    position: relative;
+  }
+
+  &-container {
+    &--close-button {
+      position: absolute;
+      right: 0;
+      top: 0;
+      cursor: pointer;
+    }
+  }
+
+  &--background-container {
+    cursor: pointer;
+
+    &__blurred {
+      top: 0;
+      left: 0;
+      z-index: 101;
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+  }
+}
+.period-block-invalid-enter {
+  display: none;
+  background-color: rgba(255, 30, 8, 0.1);
+  border: solid 1px red;
+  width: 130px;
+  padding: 10px 80px 10px 80px;
+  height: auto;
+}
+
+.add-icon-wrapper {
+
+  position: fixed;
+  z-index: 100;
+  bottom: 0;
+  right: 1%;
+  margin-bottom: 20px;
+  margin-right: 20px;
+  transition: 0.3s;
+
+  &__moved-to-left {
+    right: 26%;
+  }
+
+  .add-icon {
+    fill: #ffffff;
+  }
+}
+
+// styles for authorization window
+.authorization-window{
+  position: absolute;
+  width: 80%;
+  top: 10px;
+  left: 7.5%;
+  z-index: 100;
+  background-color: #ffffff;
+  padding: 10px 2.5%;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0,0,0, 0.5);
+
+  &--container{
+    position: relative;
+  }
+
+  &-container {
+    &--close-button {
+      position: absolute;
+      right: 0;
+      top: 0;
+      cursor: pointer;
+    }
+  }
+}
+.user-card{
+  position: absolute;
+  width: 250px;
+  height: 122px;
+  padding-left: 10px;
+  background-color: rgb(170, 199, 165);
+
+  button{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+  div{
+    font-size: 1.2em;
+  }
+}

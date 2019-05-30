@@ -1,0 +1,123 @@
+<div
+    class="modifier modifier--container"
+    (click)="closeModifier()"></div>
+
+<div class="modifier modifier--content">
+
+    <div class="content content--header">
+        <div class="header--text">{{modification}} event</div>
+        <div class="header--close-icon">
+            <button
+                mat-icon-button
+                (click)="closeModifier()"
+                class="container--close-button"><mat-icon>close</mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <div class="content content--form">
+        <form 
+            [formGroup]="eventForm"
+            class="form">
+
+            <div class="form--item">
+                <mat-form-field class="name--container">
+                    <input matInput placeholder="Name" type="text" formControlName="name" />
+                    <mat-error *ngIf="submitted && form.name.errors && form.name.errors.required">Name is required</mat-error>
+                    <mat-error *ngIf="submitted && form.name.errors && form.name.errors.pattern">Bad symbols</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="form--item">
+                <mat-form-field class="description--container">
+                    <textarea matInput placeholder="Description" type="text" formControlName="description" rows="5" cols="100%"></textarea>
+                    <mat-error *ngIf="submitted && form.description.errors && form.description.errors.required">Description is required</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="form--item">
+                <div class="time--container" formGroupName="time">
+                    <mat-form-field class="time--input">
+                        <input matInput placeholder="Time from" type="datetime-local" formControlName="timeFrom" />
+                        <mat-error *ngIf="submitted && time.timeFrom.errors && time.timeFrom.errors.required">Time from is required</mat-error>
+                    </mat-form-field>
+            
+                    <mat-form-field class="time--input">
+                        <input matInput placeholder="Time to" type="datetime-local" formControlName="timeTo" />
+                        <mat-error *ngIf="submitted && time.timeTo.errors && time.timeTo.errors.required">Time from is required</mat-error>
+                    </mat-form-field>
+
+                    <mat-error *ngIf="submitted && form.time.errors && form.time.errors.validTime">Time to must be later than time from</mat-error>
+                </div>
+            </div>
+              
+
+            <div class="form--item">
+                <div class="users-group--containter">
+
+                    <div class="users-group--name">Participants</div>
+
+                    <div class="users--list">
+                        <app-user-chip 
+                            *ngFor="let chip of participantChips$ | async"
+                            [user]="chip.user"
+                            [config]="chip.config"
+                            [showModerator]="false"
+                            (deleted)="deleteEventUser(chip.user.id)"></app-user-chip>
+                    </div>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="form--item">
+                <div class="users-group--containter">
+                    <div class="users-group--name">Invite</div>
+
+                    <div class="search--container">
+                        <mat-form-field class="search--input">
+                            <input
+                                matInput
+                                type="text"
+                                name="participant"
+                                id="search-participant"
+                                placeholder="Search user"/>
+                        </mat-form-field>
+    
+                        <div 
+                            *ngIf="isFoundUsers$ | async | equal:true"
+                            class="search--result-container">
+                            <div 
+                                *ngFor="let user of foundUsers$ | async"
+                                class="result--item"
+                                (click)="addUser(user)">
+                                {{user.name}}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="users--list">
+                        <app-user-chip 
+                            *ngFor="let chip of invitedChips$ | async"
+                            [user]="chip.user"
+                            [config]="chip.config"
+                            [showModerator]="false"
+                            (deleted)="deleteEventUser(chip.user.id)"></app-user-chip>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form--item">
+                <div class="submit--container">
+                    <button
+                        mat-icon-button
+                        (click)="submit()"
+                        class="submit--icon"><mat-icon>done</mat-icon>
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+</div>

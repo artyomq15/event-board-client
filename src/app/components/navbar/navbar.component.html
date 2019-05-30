@@ -1,0 +1,11 @@
+<div class="navbar">
+    <app-menu
+        *ngIf="isLoggedIn$ | async"
+        [user]="user$ | async"
+        class="navbar--item"></app-menu>
+
+    <app-notifications
+        *ngIf="isLoggedIn$ | async"
+        class="navbar--item"
+        [user]="user$ | async"></app-notifications>
+</div>

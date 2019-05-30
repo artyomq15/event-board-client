@@ -1,0 +1,37 @@
+<div class="board-panel">
+    <div>
+        <div class="icon--container">
+            <div
+                class="icon icon__clickable"
+                (click)="goToBoards()">
+                <mat-icon>arrow_back</mat-icon>
+            </div>
+        </div>
+        <div class="board-panel--name">
+            <div>My Board</div>
+        </div>
+    </div>    
+</div>
+<app-time-grid *ngIf="currentDatePeriod$ | async; else loading"
+    [events]="events$ | async"
+    [currentEvent]="currentEvent$ | async"
+    [date]="currentDatePeriod$ | async"
+
+    (eventAdded)="addEvent($event)"
+    (eventEdited)="editEvent($event)"
+
+    (loadedEvents)="onLoadEvents($event)"
+    (currentEventAdded)="addCurrentEvent($event)"
+    (currentEventRemoved)="removeCurrentEvent()"
+    (processingFinished)="finishGridEventsProcessing()"
+    (selectedDateAdded)="addSelectedDate($event)"
+></app-time-grid>
+
+<app-event-modifier-container
+    [config]='eventModificatorConfigSource | async'
+    (submittedEvent)="editEvent($event)"
+></app-event-modifier-container> 
+
+<ng-template #loading>
+    <mat-spinner></mat-spinner>
+</ng-template>

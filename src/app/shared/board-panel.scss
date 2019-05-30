@@ -1,0 +1,86 @@
+$edit-container-size: 50px;
+$edit-container-size-expanded: 100px;
+
+$edit-container-background: rgb(218, 218, 218);
+
+$border-color: rgb(218, 218, 218);
+
+.board-panel {
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    & > div {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    &--name {
+        display: inline-flex;
+        justify-content: space-around;
+        align-items: center;
+
+        height: 50px;
+        border-radius: 50px;
+
+        box-shadow: 0 0 0 1px $border-color;
+
+        font-size: 36px;
+
+        & > div {
+            margin: 0 10px;
+
+            font-weight: lighter;
+            
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+    }
+
+    .edit {
+        position: absolute;
+
+        float: right;
+
+        width: $edit-container-size;
+        height: $edit-container-size;
+
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+
+        transition: 0.3s;
+
+        &--creator-view {
+            width: $edit-container-size-expanded;
+        }
+
+        &--container {
+            position: relative;
+
+            margin: 5px;
+
+            background-color: $edit-container-background;
+            height: $edit-container-size;
+            width: $edit-container-size;
+            border-radius: $edit-container-size;
+
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+
+            overflow: hidden;
+
+            transition: .3s;
+
+            &__expanded-by-creator {
+                &:hover {
+                    width: $edit-container-size-expanded;
+                }
+            }
+        }
+    }
+}

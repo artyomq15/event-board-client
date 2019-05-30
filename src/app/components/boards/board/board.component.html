@@ -1,0 +1,77 @@
+<div class="board-panel">
+    <div>
+        <div class="icon--container">
+            <div
+                class="icon icon__clickable"
+                (click)="goToBoards()">
+                <mat-icon>arrow_back</mat-icon>
+            </div>
+        </div>
+        <div class="board-panel--name">
+            <div>{{(currentBoard$ | async)?.name}}</div>
+        </div>
+    </div>
+    <div>
+        <div 
+        *ngIf="showEditButtons$ | async"
+            class="edit--container"
+            [ngClass]="{
+                'edit--container__expanded-by-creator': (currentBoard$ | async)?.removable
+            }">
+            <div class="edit"
+                 [ngClass]="{
+                    'edit--creator-view': (currentBoard$ | async)?.removable
+                 }">
+                <div
+                    *ngIf="(currentBoard$ | async)?.removable | equal:true"
+                    class="icon icon__clickable"
+                    (click)="deleteBoard()">
+                    <mat-icon>delete</mat-icon>
+                </div>
+                <div
+                    *ngIf="(currentBoard$ | async)?.editable | equal:true"
+                    class="icon icon__clickable"
+                    (click)="openBoardModificator()">
+                    <mat-icon>edit</mat-icon>
+                </div>
+            </div>
+        </div>
+        <div 
+            *ngIf="(currentBoard$ | async)?.removable | equal:false"
+            class="icon--container"
+            (click)="leaveBoard()">
+            <div class="icon icon__clickable">
+                <mat-icon>exit_to_app</mat-icon>
+            </div>
+        </div>
+    </div>
+</div>
+<app-time-grid *ngIf="currentDatePeriod$ | async; else loading"
+  [currentBoard]="currentBoard$ | async"
+  [events]="events$ | async"
+  [currentEvent]="currentEvent$ | async"
+  [date]="currentDatePeriod$ | async"
+
+  (eventAdded)="addEvent($event)"
+  (eventEdited)="editEvent($event)"
+
+  (loadedEvents)="onLoadEvents($event)"
+  (currentEventAdded)="addCurrentEvent($event)"
+  (currentEventRemoved)="removeCurrentEvent()"
+  (processingFinished)="finishGridEventsProcessing()"
+  (selectedDateAdded)="addSelectedDate($event)"
+></app-time-grid>
+
+<app-board-modifier-container
+    [config]='boardModificatorConfigSource | async'
+    (submittedBoard)="editBoard($event)"
+></app-board-modifier-container>
+
+<app-event-modifier-container
+    [config]='eventModificatorConfigSource | async'
+    (submittedEvent)="editEvent($event)"
+></app-event-modifier-container>  
+
+<ng-template #loading>
+    <mat-spinner></mat-spinner>
+</ng-template>

@@ -1,0 +1,57 @@
+<div class="event-container">
+    <div class="event-container--name-block">
+        {{currentEvent.name}}
+    </div>
+    <div class="event-time-container">
+      <div class="event-container--time-block">
+        <span class="time-text">{{currentEvent.timeFrom | date: 'MMMM d, y'}}</span>
+      </div>
+      <div class="event-container--time-block">
+        <span class="time-text">{{currentEvent.timeFrom | date: 'H:mm'}}</span>
+        -
+        <span class="time-text">{{currentEvent.timeTo | date: 'H:mm'}}</span>
+        <span> ({{computeDuration(currentEvent.timeFrom, currentEvent.timeTo)}})</span>
+      </div>
+    </div>
+    <div class="event-container--description-block">
+      {{currentEvent.description}}
+    </div>
+    <div *ngIf="currentEvent.showParticipants" class="participants-container">
+      <div *ngFor="let participant of currentEvent.participants" class="participant">{{participant.name}}</div>
+    </div>
+
+    <span class="event-buttons">
+
+      <span class="event-menu-btn">
+        <ng-container *ngFor="let command of currentEvent.topCommands">
+            <button mat-icon-button matTooltip="{{command.tip}}" (click)="command.action(currentEvent)">
+              <mat-icon>{{command.iconName}}</mat-icon>
+            </button>
+        </ng-container>
+      </span>
+
+      <span class="hide-event-btn">
+        <button mat-icon-button (click)="hideEvent()">
+            <mat-icon>close</mat-icon>
+        </button>
+      </span>
+
+    
+    </span>
+
+    <span *ngIf="currentEvent.showGoToBoard">
+      <button mat-raised-button (click)="goToBoard(currentEvent.board.id)">
+        Open board
+      </button>
+    </span>
+
+
+    <span class="event-add-to-board">
+      <ng-container *ngFor="let command of currentEvent.bottomCommands">
+        <button mat-icon-button matTooltip="{{command.tip}}" [matTooltipPosition]="'left'" (click)="command.action(currentEvent)">
+            <mat-icon>{{command.iconName}}</mat-icon>
+        </button>
+      </ng-container>
+    </span>
+  
+  </div>

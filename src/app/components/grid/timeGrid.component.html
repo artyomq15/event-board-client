@@ -1,0 +1,144 @@
+<div class="container">
+
+  <div class="container--date-period date-period">
+    <div class="date-period">
+    
+        <div class="icon--container week-switcher">
+            <div
+                class="icon icon__clickable"
+                (click)="goToPreviousWeek()">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+            </div>
+            <div
+                class="icon icon__clickable"
+                (click)="goToNextWeek()">
+                <mat-icon>keyboard_arrow_right</mat-icon>
+            </div>
+        </div>
+
+        <div class="date-period--text">
+            <div>{{ datePeriod$ | async | datePeriod }}</div>
+        </div>
+
+    </div>
+
+    <div *ngIf="currentBoard == null || currentBoard?.editable">
+        <div class="icon--container">
+            <div
+                class="icon icon__clickable"
+                (click)="openEventModificator()">
+                <mat-icon>add</mat-icon>
+            </div>
+        </div>
+    </div>
+  </div>
+  
+  <div class="container--current-event" [ngClass]="{'container--current-event__opened': currentEvent}">
+    <app-event 
+      *ngIf="currentEvent"
+      [currentEvent]="currentEvent"
+      (removeCurrentEvent)="removeCurrentEvent()"
+    ></app-event>
+  </div>
+
+  <div class="container--grid" [ngClass]="{'container--grid__compressed': currentEvent}">
+    <div class="container--calendar-border calendar-border">
+
+      <div class="calendar-border--week-day-names">
+
+        <div class="offset"></div>
+
+        <div class="main">
+            <ng-container *ngFor="let header of gridHeaders$ | async">
+            <div class="calendar-border--column">
+                <div class="week-day-name">
+                    <div class="grid-header--container"> 
+                            <div class="day">{{ header.date | date: 'd' }}</div>
+                            <div class="container">
+                                <div class="day-of-week">{{ header.name }}</div>
+                                <div class="month">{{ header.date | date: 'MMM'}}</div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            </ng-container>
+        </div>
+      </div>
+
+      <div class="calendar-border--grid grid">
+        <div class="grid--time container--hours-column" #hourColumn>
+          <ng-container *ngFor="let block of gridHoursSource | async">
+            <div class={{block.class}} style.height={{block.height}}>
+              {{block.text}}
+            </div>
+          </ng-container>
+        </div>
+
+        <div class="grid--workspace grid-workspace">
+          <div
+            class="grid-workspace--blocks"
+            [ngClass]="{
+              'container--grid-block__ondrag': isDraggedSource | async
+            }"
+            #grid
+            (mousedown)="onMouseDown($event)"
+            (mouseover)="onMouseOver($event)"
+            (mouseup)="onMouseUp($event)"
+            (dblclick)="onDoubleClick($event)"
+            (dragenter)="onDragEnter($event)"
+            (dragleave)="onDragLeave($event)"
+            (drop)="onDrop($event)"
+          >
+            <ng-container *ngFor="let blocks of gridBlocks$ | async; trackBy: trackByIndex">
+              <div class="calendar-border--grid-column">
+                <ng-container *ngFor="let blockInfo of blocks; trackBy: trackById">
+                  <div
+                    class={{blockInfo.class}}
+                    [ngClass]="{
+                      'container--grid-block__selected': blockInfo.selected,
+                      'container--grid-block__hovered': blockInfo.hovered
+                    }"
+                    id={{blockInfo.id}}
+                  ></div>
+                </ng-container>
+              </div>
+            </ng-container>
+          </div>
+
+          <div class="grid-workspace--events">
+            <ng-container *ngFor="let events of gridEvents$ | async; trackBy: trackByIndex">
+              <div class="events-container">
+                <app-event-ticket
+                  *ngFor="let event of events; trackBy: trackById"
+                  [style.postion]="'relative'"
+                  [event]="event"
+                  (eventOpening)="openEvent(event)"
+                  (eventDeleting)="deleteEvent(event)"
+                  (dragStart)="ticketDragStart(event)"
+                  (dragEnd)="ticketDragEnd()"
+                  (eventDragged)="ticketDragged()"
+                  (resizeEnd)="ticketResizeEnd(event, $event)"
+                  (resizing)="ticketResizing(event, $event)"
+                  (mouseDown)="ticketMouseDown($event)"
+                ></app-event-ticket>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-event-modifier-container
+    [config]='configSource | async'
+    (submittedEvent)="addEvent($event)"
+></app-event-modifier-container>  
+
+<ng-container *ngIf="resizingTooltipData$ | async as tooltipData">
+    <div class="event-resizing-tooltip"
+         [style.top.px]="tooltipData.top"
+         [style.left.px]="tooltipData.left">
+        {{tooltipData.text}}
+    </div>
+</ng-container>

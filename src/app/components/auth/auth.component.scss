@@ -1,0 +1,31 @@
+.auth-container {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &--left {
+        float: left;
+        width: 50%;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &--right {
+        float: left;
+        width: 50%;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        > img {
+            height: 350px;
+            width: 350px;
+
+            padding: 50px;
+        }
+    }
+}

@@ -1,0 +1,43 @@
+$icon-container-size: 50px;
+$icon-container-background: rgb(218, 218, 218);
+
+$icon-size: 42px;
+$icon-background: rgb(192, 192, 192);
+
+.icon {
+    cursor: pointer;
+    user-select: none;
+
+    background-color: transparent;
+    height: $icon-size;
+    width: $icon-size;
+    border-radius: $icon-size;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    transition: .3s;
+
+    &--container {
+        height: $icon-container-size;
+        width: $icon-container-size;
+        border-radius: $icon-container-size;
+
+        background-color: $icon-container-background;
+
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+
+        margin: 5px;
+    }
+
+    &__clickable {
+
+        &:hover {
+            background-color: $icon-background;
+            box-shadow: 0 0 10px 0 $icon-background;
+        }
+    }
+}

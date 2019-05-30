@@ -1,0 +1,41 @@
+.chip {
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    border-radius: 5px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 0 0 1px rgb(212, 212, 212);
+
+    & > div {
+        margin: 5px;
+    }
+
+    &--icon {
+
+        cursor: pointer;
+
+    }
+
+    .moderator-icon {
+
+        background-color: white;
+
+        &__selected {
+            background-color: yellow;
+        }
+
+        &__editable {
+
+            transition: 0.3s;
+
+            &:hover {
+                box-shadow: 0 0 2px 1px #000000;
+            }
+
+        }
+
+    }
+
+}

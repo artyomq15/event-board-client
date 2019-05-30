@@ -1,0 +1,21 @@
+$authorization-field-width: 50%;
+
+.authorization-field{
+  width: $authorization-field-width;
+  margin: 0 auto;
+  margin-top: 50px;
+
+  .form {
+
+    &--item {
+      width: 96%;
+      margin: 0 2% 10px;
+      display: block;
+    }
+
+  }
+
+  .form-group {
+    width: 100%;
+  }
+}

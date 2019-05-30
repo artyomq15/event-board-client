@@ -1,0 +1,64 @@
+<div 
+    class="notifications-container"
+    [@openClose]="isNotificationsOpened$ | async">
+
+    <div class="notifications--button">
+        <div 
+            class="icon icon__clickable"
+            *ngIf="isNotificationsOpened$ | async | equal:false"
+            (click)="openNotifications()">
+            <mat-icon>notifications</mat-icon>
+            <div class="notifications--count-badge">{{ invitesCount$ | async }}</div>
+        </div>
+        <div 
+            class="icon icon__clickable"
+            *ngIf="isNotificationsOpened$ | async | equal:true"
+            (click)="closeNotifications()">
+            <mat-icon>clear</mat-icon>
+        </div>
+    </div>
+
+    <div 
+        class="notifications--content"
+        *ngIf="isNotificationsOpened$ | async">
+        <div class="content--items">
+            <div
+                class="invite--container" 
+                *ngFor="let invite of invites$ | async; let last = last">
+                <ng-container
+                    [ngTemplateOutlet]="invite.type === 'Event' ? event : board"
+                    [ngTemplateOutletContext]="{ data: invite.data }">
+                </ng-container>
+                <div class="invite--actions">
+                    <button
+                        class="invite--button"
+                        mat-button
+                        (click)="invite.onDecline()">Decline</button>
+                    <button
+                        class="invite--button"
+                        mat-raised-button
+                        (click)="invite.onAccept()">Accept</button>
+                </div>
+                <div
+                    *ngIf="!last"
+                    class="invite--divider"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<ng-template #event let-event="data">
+    <div class="event-invite--header">
+        <b>{{ event.creator.name }}</b> invites you to <b>{{ event.name }}</b> event
+    </div>
+    <div class="event-invite--content">
+        {{event.timeFrom | date: 'MMMM d, y H:mm'}} - {{event.timeTo | date: 'H:mm'}}
+    </div>
+</ng-template>
+
+<ng-template #board let-board="data">
+    <div class="board-invite--header">
+        You are invited to <b>{{ board.name }}</b> board
+    </div>
+</ng-template>

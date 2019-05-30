@@ -1,0 +1,63 @@
+<ng-container *ngIf="event.editable">
+    <div 
+        class="event event__resizable"
+        
+        [style.position]="'absolute'"
+        [style.height]="event.height + 'px'"
+        [style.top]="event.top + 'px'"
+        [style.width]="event.width + '%'"
+        [style.left]="event.left + '%'" 
+        
+        (click)="openEvent()"
+        (mousedown)="onMouseDown($event)"
+        
+        mwlResizable
+        [enableGhostResize]="true"
+        [ghostElementPositioning]="'absolute'"
+        [resizeEdges]="{bottom: true, right: false, top: true, left: false}"
+        (resizing)="onResizing($event)"
+        (resizeEnd)="onResizeEnd($event)">
+        <ng-container
+            [ngTemplateOutlet]="eventTicket"
+            [ngTemplateOutletContext]="{ event: event }">
+        </ng-container>
+    </div>
+</ng-container>
+
+<ng-container *ngIf="!event.editable">
+    <div
+        class="event event__not-resizable"
+
+        [style.position]="'absolute'"
+        [style.height]="event.height + 'px'"
+        [style.top]="event.top + 'px'"
+        [style.width]="event.width + '%'"
+        [style.left]="event.left + '%'"
+        
+        (click)="openEvent()"
+        (mousedown)="onMouseDown($event)">
+        <ng-container
+            [ngTemplateOutlet]="eventTicket"
+            [ngTemplateOutletContext]="{ event: event }">
+        </ng-container>
+    </div>
+</ng-container>
+
+<ng-template #eventTicket let-event="event">
+    <div
+        class="event--draggable-container"
+
+        [style.position]="'relative'"
+        [style.height]="event.height - 8 + 'px'"
+        [style.top]="'4px'"
+
+        draggable="true" 
+        (dragstart)="startDrag($event)" 
+        (dragend)="endDrag()"
+        (drag)="dragEvent()">
+        <div class="event--header">{{event.name}}</div>
+        <div class="event--time-container">
+            <span class="event--time">{{event.timeFrom | date: 'H:mm'}} - {{event.timeTo | date: 'H:mm'}}</span>
+        </div>
+    </div>
+</ng-template>

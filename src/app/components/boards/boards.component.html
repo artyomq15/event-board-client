@@ -1,0 +1,67 @@
+<div class="boards-panel">
+    <div class="icon--container">
+        <div
+            class="icon icon__clickable"
+            (click)="openBoardModificator()">
+            <mat-icon>add</mat-icon>
+        </div>
+    </div>
+    <div
+        class="search--container"
+        [ngClass]="{
+            'search--container__expanded': isSearchActive$ | async
+        }">
+        <div class="search--content">
+            <div
+                class="icon icon__clickable"
+                (click)="activateSearch()">
+                <mat-icon>search</mat-icon>
+            </div>
+            <div class="search--input">
+                <input
+                    type="text"
+                    name="participant"
+                    id="search-board"
+                    placeholder="Search board"/>
+            </div>
+            <div
+                class="icon icon__clickable"
+                (click)="deactivateSearch()">
+                <mat-icon>close</mat-icon>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div
+    *ngIf="isSearchActive$ | async | equal:false"
+    class="boards-container">
+    <div class="boards-container--board" (click)="goToBoard('my')">
+        <span>My Board</span>
+    </div>
+    <div
+        *ngFor="let board of boards$ | async"
+        class="boards-container--board"
+        (click)="goToBoard(board.id)">
+        <span>{{board.name}}</span>
+    </div>
+</div>
+
+<div
+    *ngIf="isSearchActive$ | async | equal:true"
+    class="boards-container">
+    <div
+        *ngFor="let board of foundBoards$ | async"
+        class="boards-container--board"
+        (click)="acceptAndGoToBoard(board)">
+        <span>{{board.name}}</span>
+        <div class="search--result-number">
+            {{board.participants}}<mat-icon>people</mat-icon> {{board.events}}<mat-icon>event</mat-icon>
+        </div>
+    </div>
+</div>
+
+<app-board-modifier-container
+    [config]='configSource | async'
+    (submittedBoard)="addBoard($event)"
+></app-board-modifier-container>

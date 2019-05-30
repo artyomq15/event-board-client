@@ -1,0 +1,121 @@
+$border-color: rgb(218, 218, 218);
+
+$background-color: rgb(255, 255, 255);
+$background-color-hovered: rgb(230, 234, 238);
+
+$board-height: 70px;
+$board-width: 250px;
+$border-radius: 25px;
+
+$icon-size: 42px;
+
+$search-container-size: 50px;
+$search-container-size-expanded: $search-container-size * 5;
+$search-background: rgb(218, 218, 218);
+
+.boards-panel {  
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.search {
+
+    &--input {
+        height: $icon-size;
+        width: $icon-size * 3 + 16;
+
+        
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        & > input {
+            width: 100%;
+
+            background-color: transparent;
+            outline: none;
+            border: 0;
+            border-bottom: 1px solid black;
+        }
+    }
+
+    &--container {
+        background-color: $search-background;
+
+        height: $search-container-size;
+        width: $search-container-size;
+        border-radius: $search-container-size;
+
+        transition: .3s;
+
+        overflow: hidden;
+
+        &__expanded {
+            width: $search-container-size-expanded;
+        }
+    }
+
+    &--content {
+        width: $search-container-size-expanded;
+        height: $search-container-size;
+
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    &--result-number {
+        font-size: 24px;
+        font-weight: lighter;
+
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+}
+
+.boards-container {
+	display: flex;
+	flex-wrap: wrap;
+
+	&--board {
+        display: flex;
+        flex-direction: column;
+		justify-content: center;
+        align-items: center;
+
+		height: $board-height;
+        width: $board-width;
+        border-radius: $border-radius;
+
+		font-size: xx-large;
+        margin: 10px;
+        padding: 0 10px;
+		background-color: $background-color;
+        box-shadow: 0 0 0 1px $border-color;
+
+
+		user-select: none;
+        cursor: pointer;
+        
+        transition: 0.3s;
+
+        & > span {
+            
+            width: $board-width;
+
+            text-align: center;
+
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        
+        &:hover {
+            box-shadow: 0 0 0 2px $border-color;
+        }
+
+    }
+}

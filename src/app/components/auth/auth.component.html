@@ -1,0 +1,9 @@
+<div class="auth-container">
+    <div class="auth-container--left">
+        <app-sign-in *ngIf="isSignIn$ | async | equal:true"></app-sign-in>
+        <app-sign-up *ngIf="isSignIn$ | async | equal:false"></app-sign-up>
+    </div>
+    <div class="auth-container--right">
+        <img src="../../../assets/logo.png">
+    </div>
+</div>

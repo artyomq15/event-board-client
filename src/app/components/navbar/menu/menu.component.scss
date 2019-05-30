@@ -1,0 +1,30 @@
+$menu-container-size: 50px;
+$menu-container-size-expanded: $menu-container-size * 3;
+
+$menu-background: rgb(218, 218, 218);
+
+.menu-container {
+    background-color: $menu-background;
+    height: $menu-container-size;
+    width: $menu-container-size;
+    border-radius: $menu-container-size;
+
+    overflow: hidden;
+
+    transition: .3s;
+
+    z-index: 1000;
+
+    &:hover {
+        width: $menu-container-size-expanded;
+    }
+
+    .menu {
+        width: $menu-container-size-expanded;
+        height: $menu-container-size;
+
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+}

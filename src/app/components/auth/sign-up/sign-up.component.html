@@ -1,0 +1,47 @@
+<form [formGroup]="signUpForm" (ngSubmit)="onSubmit()" class="registration-field--form form">
+
+  <div class="form--item">
+    <h2>Sign Up</h2>
+  </div>
+
+  <div class="form--item">
+    <mat-form-field class="form-group">
+      <input matInput placeholder="Name" type="text" formControlName="name" />
+      <mat-error *ngIf="submitted && form.name.errors && form.name.errors.required">Name is required</mat-error>
+      <mat-error *ngIf="submitted && form.name.errors && form.name.errors.pattern">Bad symbols</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div class="form--item">
+    <mat-form-field class="form-group">
+      <input matInput placeholder="Email" type="text" formControlName="email" />
+      <mat-error *ngIf="submitted && form.email.errors && form.email.errors.required">Email is required</mat-error>
+      <mat-error *ngIf="submitted && form.email.errors && form.email.errors.email">Wrong email</mat-error>
+    </mat-form-field>
+    <mat-error *ngIf="message$ | async as message">{{message}}</mat-error>
+  </div>
+
+  <div formGroupName="password">
+    <div class="form--item">
+      <mat-form-field class="form-group">
+        <input matInput placeholder="Password" type="password" formControlName="password" />
+        <mat-error *ngIf="submitted && password.password.errors && password.password.errors.required">Password is
+          required</mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form--item">
+      <mat-form-field class="form-group">
+        <input matInput placeholder="Confirm password" type="password" formControlName="passwordConfirm" />
+        <mat-error *ngIf="submitted && password.passwordConfirm.errors && password.passwordConfirm.errors.required">Confirm
+          password is required</mat-error>
+      </mat-form-field>
+      <mat-error *ngIf="submitted && form.password.errors && form.password.errors.confirm">Passwords don't match</mat-error>
+    </div>
+  </div>
+
+  <div class="form--item">
+    <button mat-raised-button>Sign Up</button>
+    <button mat-button routerLink="/sign-in">Sign In</button>
+  </div>
+</form>

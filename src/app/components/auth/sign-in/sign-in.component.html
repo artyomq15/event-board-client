@@ -1,0 +1,27 @@
+<form [formGroup]="signInForm" (ngSubmit)="onSubmit()" class="authorization-field--form form">
+
+    <div class="form--item">
+        <h2>Sign In</h2>
+    </div>
+
+    <div class="form--item">
+        <mat-form-field class="form-group">
+            <input matInput placeholder="Email" type="text" formControlName="email" />
+            <mat-error *ngIf="submitted && form.email.errors && form.email.errors.required">Email is required</mat-error>
+            <mat-error *ngIf="submitted && form.email.errors && form.email.errors.email">Wrong email</mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="form--item">
+        <mat-form-field class="form-group">
+            <input matInput placeholder="Password" type="password" formControlName="password" />
+            <mat-error *ngIf="submitted && form.password.errors && form.password.errors.required">Password is required</mat-error>
+        </mat-form-field>
+        <mat-error *ngIf="message$ | async as message">{{message}}</mat-error>
+    </div>
+
+    <div class="form--item">
+        <button mat-raised-button>Sign In</button>
+        <button mat-button routerLink="/sign-up">Sign Up</button>
+    </div>
+</form>
