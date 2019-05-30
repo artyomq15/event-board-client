@@ -4,7 +4,7 @@
 
 export const environment: any = {
   production: false,
-  APIEndpoint: 'http://localhost:3000/api/'
+  APIEndpoint: 'https://event-board-server-app.herokuapp.com/api/'
 };
 
 /*
