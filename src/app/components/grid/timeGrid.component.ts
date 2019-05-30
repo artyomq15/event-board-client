@@ -139,7 +139,11 @@ export class TimeGridComponent implements OnInit, OnDestroy, OnChanges {
 	@Output() public processingFinished: EventEmitter<any> = new EventEmitter<any>();
 	@Output() public selectedDateAdded: EventEmitter<DatePeriod> = new EventEmitter<DatePeriod>();
 
-	@Output() public eventAdded: EventEmitter<Event> = new EventEmitter<Event>();
+    @Output() public eventAdded: EventEmitter<Event> = new EventEmitter<Event>();
+    
+    
+	public isSelectionSource: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	public isDraggedSource: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 	public resizingTooltipData$: Observable<any>;
 	private resizingTooltipDatePeriodSource: BehaviorSubject<DatePeriod> = new BehaviorSubject<DatePeriod>(null);
@@ -157,8 +161,6 @@ export class TimeGridComponent implements OnInit, OnDestroy, OnChanges {
 
 	private draggedEventSource: BehaviorSubject<Event> = new BehaviorSubject<Event>(null);
 
-	private isSelectionSource: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-	private isDraggedSource: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 	private destroyedSource: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
 

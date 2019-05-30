@@ -17,7 +17,7 @@ export class SignInComponent implements OnInit {
 
 	public message$: Observable<string>;
 
-	private signInForm: FormGroup;
+	public signInForm: FormGroup;
 
 	constructor(
 		private formBuilder: FormBuilder,
